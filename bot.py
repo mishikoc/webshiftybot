@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
+import config
 import telebot
-bot = telebot.TeleBot("")
 
-@bot.message_handler(commands=['help', 'start'])
-def send_welcome(message):
-    msg = bot.send_message(message.chat.id, 'Привет! Я codex_bot!')
+bot = telebot.TeleBot(config.token)
 
-@bot.message_handler(commands=['auth'])
-def send_auth(message):
-    pass 
+@bot.message_handler(content_types=["text"])
+def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе
+    bot.send_message(message.chat.id, message.text)
 
-bot.polling()
+if __name__ == '__main__':
+     bot.polling(none_stop=True)
